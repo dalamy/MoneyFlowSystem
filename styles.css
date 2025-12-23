@@ -1,0 +1,1447 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 95vw;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+}
+
+.version-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.version-selector {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.95);
+    color: #667eea;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.version-selector:hover {
+    background: white;
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.btn-version {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    background: rgba(255,255,255,0.95);
+    color: #667eea;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-version:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.versions-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.version-item {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.version-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.version-info {
+    flex: 1;
+}
+
+.version-name {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.version-date {
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.version-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-small {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-rename {
+    background: #3498db;
+    color: white;
+}
+
+.btn-rename:hover {
+    background: #2980b9;
+}
+
+.btn-delete-version {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-delete-version:hover {
+    background: #c0392b;
+}
+
+/* Panel de Métricas y Botón */
+.metrics-and-button {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.metrics-panel {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.metric-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 35px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    min-width: 200px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.metric-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.metric-card.total-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.metric-card.total-card::before {
+    background: linear-gradient(90deg, #ffd89b 0%, #19547b 100%);
+}
+
+.metric-card.success-card {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.metric-card.success-card::before {
+    background: linear-gradient(90deg, #ffffff 0%, #c3e4dd 100%);
+}
+
+.metric-card.assets-card {
+    background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+    color: white;
+}
+
+.metric-card.assets-card::before {
+    background: linear-gradient(90deg, #ffeaa7 0%, #fdcb6e 100%);
+}
+
+.metric-card.net-worth-card {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    color: white;
+}
+
+.metric-card.net-worth-card::before {
+    background: linear-gradient(90deg, #81ecec 0%, #74b9ff 100%);
+}
+
+.metric-card.alert {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.metric-card.alert::before {
+    background: linear-gradient(90deg, #ff6b6b 0%, #c92a2a 100%);
+}
+
+.metric-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.metric-label {
+    font-size: 0.85em;
+    font-weight: 700;
+    margin-bottom: 12px;
+    opacity: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-card.total-card .metric-label,
+.metric-card.success-card .metric-label,
+.metric-card.alert .metric-label {
+    opacity: 1;
+}
+
+.metric-value {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #667eea;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.metric-card.total-card .metric-value,
+.metric-card.success-card .metric-value,
+.metric-card.alert .metric-value {
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Threshold Cards dentro del metrics panel */
+.threshold-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 35px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    min-width: 200px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.threshold-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+}
+
+.threshold-card.minimum-card::before {
+    background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+}
+
+.threshold-card.desirable-card::before {
+    background: linear-gradient(90deg, #f39c12 0%, #e67e22 100%);
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.4);
+}
+
+.threshold-card.goals-card::before {
+    background: linear-gradient(90deg, #27ae60 0%, #229954 100%);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.4);
+}
+
+.threshold-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.threshold-label {
+    font-size: 0.8em;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 5px;
+}
+
+.threshold-percentage {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 8px;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.threshold-card.minimum-card .threshold-percentage {
+    color: #e74c3c;
+}
+
+.threshold-card.desirable-card .threshold-percentage {
+    color: #f39c12;
+}
+
+.threshold-card.goals-card .threshold-percentage {
+    color: #27ae60;
+}
+
+.threshold-value {
+    font-size: 0.95em;
+    color: #7f8c8d;
+    font-weight: 600;
+}
+
+/* Distance Cards dentro del metrics panel */
+.distance-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 35px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    min-width: 200px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.distance-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.distance-card.minimum-distance {
+    border-color: rgba(231, 76, 60, 0.2);
+    background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+}
+
+.distance-card.minimum-distance:hover {
+    border-color: rgba(231, 76, 60, 0.5);
+}
+
+.distance-card.desirable-distance {
+    border-color: rgba(243, 156, 18, 0.2);
+    background: linear-gradient(135deg, #ffffff 0%, #fffbf0 100%);
+}
+
+.distance-card.desirable-distance:hover {
+    border-color: rgba(243, 156, 18, 0.5);
+}
+
+.distance-card.goals-distance {
+    border-color: rgba(39, 174, 96, 0.2);
+    background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+}
+
+.distance-card.goals-distance:hover {
+    border-color: rgba(39, 174, 96, 0.5);
+}
+
+.distance-icon {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.distance-label {
+    font-size: 0.8em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.distance-percentage {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 8px;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.distance-card.minimum-distance .distance-percentage {
+    color: #e74c3c;
+}
+
+.distance-card.desirable-distance .distance-percentage {
+    color: #f39c12;
+}
+
+.distance-card.goals-distance .distance-percentage {
+    color: #27ae60;
+}
+
+.distance-value {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #7f8c8d;
+    text-shadow: none;
+}
+
+.distance-total {
+    font-size: 0.75em;
+    color: #95a5a6;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* Phase Progress Card */
+.phase-progress-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    grid-column: span 2;
+}
+
+.phase-progress-content {
+    margin-top: 5px;
+}
+
+.phase-item-progress {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.phase-item-progress:last-child {
+    margin-bottom: 0;
+}
+
+.phase-progress-name {
+    font-size: 0.8em;
+    font-weight: 600;
+    color: white;
+}
+
+.phase-progress-percentage {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #4ade80;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.distance-card.minimum-distance .distance-value {
+    color: #e74c3c;
+}
+
+.distance-card.desirable-distance .distance-value {
+    color: #f39c12;
+}
+
+.distance-card.goals-distance .distance-value {
+    color: #27ae60;
+}
+
+/* Botón Agregar Fondo */
+.add-fund-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #667eea;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group input[type="color"] {
+    height: 50px;
+    cursor: pointer;
+}
+
+.checkbox-group {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+/* Contenedor de Tanques */
+.tanks-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
+    max-width: 100%;
+}
+
+/* Tanque Individual */
+.tank {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    flex: 1 1 180px;
+    min-width: 180px;
+    max-width: 250px;
+    transition: transform 0.3s ease;
+    cursor: move;
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+}
+
+.tank:active {
+    cursor: grabbing;
+}
+
+.tank:hover {
+    transform: scale(1.05);
+}
+
+.tank-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.tank-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.tank-current-value {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #27ae60;
+}
+
+.tank-visual {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: #ecf0f1;
+    border: 3px solid #34495e;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.tank-liquid {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: height 0.5s ease, background-color 0.3s ease;
+    border-radius: 0 0 7px 7px;
+}
+
+.threshold-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    z-index: 10;
+}
+
+.threshold-line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    border-top: 2px dashed;
+}
+
+.threshold-line.minimum {
+    border-top-color: #e74c3c;
+}
+
+.threshold-line.minimum::before {
+    border-top-color: #e74c3c;
+}
+
+.threshold-line.desirable {
+    border-top-color: #f39c12;
+}
+
+.threshold-line.desirable::before {
+    border-top-color: #f39c12;
+}
+
+.threshold-line.goal {
+    border-top-color: #27ae60;
+}
+
+.threshold-line.goal::before {
+    border-top-color: #27ae60;
+}
+
+.threshold-line.maximum {
+    border-top-color: #e74c3c;
+}
+
+.threshold-line.maximum::before {
+    border-top-color: #e74c3c;
+}
+
+.threshold-label {
+    position: absolute;
+    right: 5px;
+    top: -10px;
+    font-size: 0.65em;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.threshold-line.minimum .threshold-label {
+    background: #e74c3c;
+    color: white;
+}
+
+.threshold-line.desirable .threshold-label {
+    background: #f39c12;
+    color: white;
+}
+
+.threshold-line.goal .threshold-label {
+    background: #27ae60;
+    color: white;
+}
+
+.threshold-line.maximum .threshold-label {
+    background: #e74c3c;
+    color: white;
+}
+
+.tank-description {
+    font-size: 0.9em;
+    color: #555;
+    padding: 15px 0;
+    line-height: 1.4;
+    text-align: left;
+    border-top: 1px solid #ecf0f1;
+    margin-top: 15px;
+}
+
+.tank-values {
+    font-size: 0.8em;
+    color: #555;
+}
+
+.tank-values div {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.tank-values div:last-child {
+    border-bottom: none;
+}
+
+.value-label {
+    font-weight: 600;
+}
+
+.tank-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.btn-edit {
+    flex: 1;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-edit:hover {
+    background: #2980b9;
+}
+
+.btn-delete {
+    flex: 1;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    color: white;
+    padding: 60px 20px;
+}
+
+.empty-state h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.empty-state p {
+    font-size: 1.2em;
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+    
+    .metrics-panel {
+        flex-direction: column;
+    }
+    
+    .metric-card {
+        min-width: auto;
+    }
+    
+    .tanks-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tank {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+/* Timeline Section */
+.timeline-section {
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.timeline-section h2 {
+    text-align: center;
+    color: #6a11cb;
+    margin-bottom: 30px;
+}
+
+.timeline-placeholder {
+    text-align: center;
+    color: #6c757d;
+    padding: 40px;
+    font-style: italic;
+}
+
+.timeline-container {
+    position: relative;
+    min-height: 200px;
+    margin-left: 80px;
+}
+
+.timeline-track {
+    position: relative;
+    margin-bottom: 100px;
+    margin-left: 0;
+}
+
+.timeline-track-label {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #6a11cb;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #6a11cb;
+}
+
+/* Colores específicos para cada track */
+.timeline-track-funds .timeline-track-label {
+    color: #667eea;
+    border-left-color: #667eea;
+}
+
+.timeline-track-assets .timeline-track-label {
+    color: #f093fb;
+    border-left-color: #f093fb;
+}
+
+.timeline-track-networth .timeline-track-label {
+    color: #4facfe;
+    border-left-color: #4facfe;
+}
+
+.timeline-bar {
+    position: relative;
+    height: 60px;
+    background: linear-gradient(to right, #e9ecef, #dee2e6);
+    border-radius: 30px;
+    margin: 60px 0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.timeline-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 30px;
+    transition: width 0.5s ease;
+}
+
+/* Colores diferentes para cada barra de progreso */
+.timeline-progress-funds {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.timeline-progress-assets {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.timeline-progress-networth {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.timeline-phase {
+    position: absolute;
+    top: -40px;
+    transform: translateX(-50%);
+    text-align: center;
+    cursor: pointer;
+}
+
+.phase-marker {
+    width: 16px;
+    height: 16px;
+    background: white;
+    border: 4px solid #6a11cb;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.phase-info {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    min-width: 120px;
+    border-left: 4px solid #6a11cb;
+}
+
+.phase-name {
+    font-weight: 600;
+    color: #6a11cb;
+    margin-bottom: 4px;
+    font-size: 0.95em;
+}
+
+.phase-goal {
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 2px;
+}
+
+.phase-date {
+    color: #6c757d;
+    font-size: 0.85em;
+}
+
+.timeline-current-date {
+    position: absolute;
+    top: -80px;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.current-date-line {
+    width: 2px;
+    height: 140px;
+    background: #e74c3c;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.current-date-label {
+    background: #e74c3c;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+    white-space: nowrap;
+}
+
+.timeline-current-value {
+    position: absolute;
+    bottom: -80px;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.current-value-marker {
+    width: 20px;
+    height: 20px;
+    background: #f39c12;
+    border: 3px solid white;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    box-shadow: 0 0 15px rgba(243, 156, 18, 0.6);
+}
+
+.current-value-label {
+    background: #f39c12;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+    white-space: nowrap;
+}
+
+.timeline-start-marker {
+    position: absolute;
+    left: -75px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: white;
+    font-size: 0.75em;
+    width: 65px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    padding: 8px 6px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(106, 17, 203, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    z-index: 10;
+    line-height: 1.2;
+}
+
+/* Phase Form */
+.phase-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #6a11cb;
+}
+
+.phase-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.phase-number {
+    font-weight: 600;
+    color: #6a11cb;
+}
+
+.btn-remove-phase {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+
+.btn-remove-phase:hover {
+    background: #c82333;
+}
+
+.phase-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-add-phase {
+    width: 100%;
+    padding: 10px;
+    background: #6a11cb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.btn-add-phase:hover {
+    background: #5a0db8;
+}
+
+/* Assets Section */
+.assets-section {
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.assets-section h2 {
+    text-align: center;
+    color: #e67e22;
+    margin-bottom: 30px;
+}
+
+.assets-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    min-height: 100px;
+}
+
+.btn-asset {
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(230, 126, 34, 0.3);
+    transition: all 0.3s;
+}
+
+.btn-asset:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(230, 126, 34, 0.4);
+}
+
+.asset {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    min-width: 280px;
+    max-width: 350px;
+    transition: transform 0.3s;
+}
+
+.asset:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.asset-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.asset-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.asset-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #e67e22;
+}
+
+.asset-tank {
+    position: relative;
+    height: 300px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.1));
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+    border: 2px solid #ecf0f1;
+}
+
+.asset-liquid {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top, var(--liquid-color), rgba(255,255,255,0.3));
+    transition: height 0.5s ease;
+    border-radius: 0 0 8px 8px;
+}
+
+.asset-threshold-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-top: 3px dashed;
+    z-index: 5;
+}
+
+.asset-threshold-line::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: -6px;
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid;
+    border-right: 3px solid;
+    transform: rotate(45deg);
+}
+
+.asset-threshold-line.invested {
+    border-top-color: #e74c3c;
+}
+
+.asset-threshold-line.invested::before {
+    border-top-color: #e74c3c;
+    border-right-color: #e74c3c;
+}
+
+.asset-threshold-line.desired {
+    border-top-color: #f39c12;
+}
+
+.asset-threshold-line.desired::before {
+    border-top-color: #f39c12;
+    border-right-color: #f39c12;
+}
+
+.asset-threshold-line.sale {
+    border-top-color: #27ae60;
+}
+
+.asset-threshold-line.sale::before {
+    border-top-color: #27ae60;
+    border-right-color: #27ae60;
+}
+
+.asset-threshold-label {
+    position: absolute;
+    right: 5px;
+    top: -10px;
+    font-size: 0.65em;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.asset-threshold-line.invested .asset-threshold-label {
+    background: #e74c3c;
+    color: white;
+}
+
+.asset-threshold-line.desired .asset-threshold-label {
+    background: #f39c12;
+    color: white;
+}
+
+.asset-threshold-line.sale .asset-threshold-label {
+    background: #27ae60;
+    color: white;
+}
+
+.asset-description {
+    font-size: 0.9em;
+    color: #555;
+    padding: 15px 0;
+    line-height: 1.4;
+    text-align: left;
+    border-top: 1px solid #ecf0f1;
+    margin-top: 15px;
+}
+
+.asset-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* ==================== PRIVACY MODE ==================== */
+.privacy-mode .metric-value,
+.privacy-mode .distance-value,
+.privacy-mode .distance-total,
+.privacy-mode .tank-value,
+.privacy-mode .tank-current-value,
+.privacy-mode .threshold-label,
+.privacy-mode .asset-value,
+.privacy-mode .asset-threshold-label,
+.privacy-mode .asset-invested,
+.privacy-mode .asset-missing,
+.privacy-mode .asset-sale-value,
+.privacy-mode .current-value-label,
+.privacy-mode .phase-goal {
+    position: relative;
+    user-select: none;
+}
+
+.privacy-mode .metric-value::after,
+.privacy-mode .distance-value::after,
+.privacy-mode .distance-total::after,
+.privacy-mode .tank-value::after,
+.privacy-mode .tank-current-value::after,
+.privacy-mode .threshold-label::after,
+.privacy-mode .asset-value::after,
+.privacy-mode .asset-threshold-label::after,
+.privacy-mode .asset-invested::after,
+.privacy-mode .asset-missing::after,
+.privacy-mode .asset-sale-value::after,
+.privacy-mode .current-value-label::after,
+.privacy-mode .phase-goal::after {
+    content: "•••••";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: inherit;
+    color: inherit;
+}
+
+.privacy-mode .metric-value,
+.privacy-mode .tank-current-value,
+.privacy-mode .asset-value,
+.privacy-mode .current-value-label {
+    color: transparent !important;
+    text-shadow: none !important;
+}
+
+.privacy-mode .distance-value,
+.privacy-mode .distance-total,
+.privacy-mode .tank-value,
+.privacy-mode .threshold-label,
+.privacy-mode .asset-threshold-label,
+.privacy-mode .phase-goal {
+    color: transparent !important;
+    text-shadow: none !important;
+}
+
+/* Mantener visibles los porcentajes y nombres */
+.privacy-mode .distance-percentage,
+.privacy-mode .phase-progress-percentage,
+.privacy-mode .metric-label,
+.privacy-mode .distance-label,
+.privacy-mode .phase-progress-name,
+.privacy-mode .phase-name,
+.privacy-mode .timeline-track-label {
+    color: inherit !important;
+    text-shadow: none !important;
+}

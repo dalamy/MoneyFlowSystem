@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Flow - Gestión de Fondos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💰 Money Flow Dashboard</h1>
+            <div class="version-controls">
+                <select id="versionSelector" class="version-selector">
+                    <option value="current">Versión Actual</option>
+                </select>
+                <button id="togglePrivacyBtn" class="btn-version" title="Ocultar valores monetarios">👁️</button>
+                <button id="createVersionBtn" class="btn-version" title="Crear nueva versión">💾 Guardar Versión</button>
+                <button id="generateDefaultsBtn" class="btn-version" title="Generar datos por defecto">🎲 Demo</button>
+                <button id="exportReportBtn" class="btn-version" title="Exportar informe ejecutivo">📊 Informe</button>
+                <button id="exportCsvBtn" class="btn-version" title="Exportar a CSV">📤 Exportar</button>
+                <button id="importCsvBtn" class="btn-version" title="Importar desde CSV">📥 Importar</button>
+                <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+                <button id="manageVersionsBtn" class="btn-version" title="Gestionar versiones">⚙️</button>
+                <button id="timelineBtn" class="btn-version" title="Configurar Línea de Tiempo">📅</button>
+            </div>
+        </header>
+
+        <!-- Panel de Métricas y Botones -->
+        <div class="metrics-and-button">
+            <div class="metrics-panel">
+                <div class="metric-card net-worth-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-label">Patrimonio Neto</div>
+                    <div class="metric-value" id="netWorth">$0.00</div>
+                </div>
+                <div class="metric-card total-card">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-label">Valor Combinado Total</div>
+                    <div class="metric-value" id="totalValue">$0.00</div>
+                </div>
+                <div class="metric-card assets-card">
+                    <div class="metric-icon">🏛️</div>
+                    <div class="metric-label">Valor de Assets</div>
+                    <div class="metric-value" id="assetsValue">$0.00</div>
+                </div>
+                <div class="metric-card success-card">
+                    <div class="metric-icon">✅</div>
+                    <div class="metric-label">Goals Reached</div>
+                    <div class="metric-value" id="goalsReached">0/0</div>
+                </div>
+                <div class="metric-card alert">
+                    <div class="metric-icon">⚠️</div>
+                    <div class="metric-label">Funds at Risk</div>
+                    <div class="metric-value" id="fundsAtRisk">0</div>
+                </div>
+                
+                <div class="distance-card minimum-distance">
+                    <div class="distance-icon">🎯</div>
+                    <div class="distance-label">Falta para Minimum</div>
+                    <div class="distance-percentage" id="distanceToMinimumPercentage">0%</div>
+                    <div class="distance-value" id="distanceToMinimum">$0.00</div>
+                    <div class="distance-total" id="totalMinimum">Total: $0.00</div>
+                </div>
+                <div class="distance-card desirable-distance">
+                    <div class="distance-icon">📈</div>
+                    <div class="distance-label">Falta para Desirable</div>
+                    <div class="distance-percentage" id="distanceToDesirablePercentage">0%</div>
+                    <div class="distance-value" id="distanceToDesirable">$0.00</div>
+                    <div class="distance-total" id="totalDesirable">Total: $0.00</div>
+                </div>
+                <div class="distance-card goals-distance">
+                    <div class="distance-icon">🏆</div>
+                    <div class="distance-label">Falta para Goals</div>
+                    <div class="distance-percentage" id="distanceToGoalsPercentage">0%</div>
+                    <div class="distance-value" id="distanceToGoals">$0.00</div>
+                    <div class="distance-total" id="totalGoals">Total: $0.00</div>
+                </div>
+                
+                <div class="metric-card phase-progress-card">
+                    <div class="metric-icon">📊</div>
+                    <div class="metric-label">Progreso por Fase</div>
+                    <div id="phaseProgress" class="phase-progress-content">
+                        <p style="color: #95a5a6; font-size: 0.9em;">Configura la línea de tiempo</p>
+                    </div>
+                </div>
+            </div>
+            <div class="add-fund-section">
+                <button id="addAssetBtn" class="btn-asset">🏛️ Agregar Asset</button>
+                <button id="addFundBtn" class="btn-primary">+ Agregar Nuevo Fondo</button>
+            </div>
+        </div>
+
+        <!-- Modal para Agregar/Editar Asset -->
+        <div id="assetModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeAssetModal">&times;</span>
+                <h2 id="assetModalTitle">Agregar Nuevo Asset</h2>
+                <form id="assetForm">
+                    <div class="form-group">
+                        <label for="assetTitle">Título del Asset:</label>
+                        <input type="text" id="assetTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetDescription">Descripción:</label>
+                        <textarea id="assetDescription" rows="3" placeholder="Descripción del asset (opcional)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetCurrentValue">Valor Actual:</label>
+                        <input type="number" id="assetCurrentValue" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetInvested">Valor Invertido:</label>
+                        <input type="number" id="assetInvested" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetMissingInvestment">Valor Faltante de Inversión:</label>
+                        <input type="number" id="assetMissingInvestment" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetSaleValue">Valor de Venta (Goal):</label>
+                        <input type="number" id="assetSaleValue" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetColor">Color:</label>
+                        <input type="color" id="assetColor" value="#e67e22">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Guardar Asset</button>
+                        <button type="button" class="btn-secondary" id="cancelAssetBtn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para Agregar/Editar Fondo -->
+        <div id="fundModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Agregar Nuevo Fondo</h2>
+                <form id="fundForm">
+                    <div class="form-group">
+                        <label for="fundName">Nombre del Fondo:</label>
+                        <input type="text" id="fundName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fundDescription">Descripción:</label>
+                        <textarea id="fundDescription" rows="3" placeholder="Descripción del fondo (opcional)"></textarea>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="fundIsDebt">
+                            <span>Este es un fondo de deuda (Debt)</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="fundValue">Valor Actual:</label>
+                        <input type="number" id="fundValue" step="0.01" required>
+                    </div>
+                    <div class="form-group" id="minThresholdGroup">
+                        <label for="fundMinThreshold">Minimum Threshold:</label>
+                        <input type="number" id="fundMinThreshold" step="0.01" required>
+                    </div>
+                    <div class="form-group" id="maxThresholdGroup" style="display: none;">
+                        <label for="fundMaxThreshold">Maximum Threshold:</label>
+                        <input type="number" id="fundMaxThreshold" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="fundDesirableThreshold">Desirable Threshold:</label>
+                        <input type="number" id="fundDesirableThreshold" step="0.01" required>
+                    </div>
+                    <div class="form-group" id="goalGroup">
+                        <label for="fundGoal">Goal:</label>
+                        <input type="number" id="fundGoal" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fundColor">Color:</label>
+                        <input type="color" id="fundColor" value="#3498db">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Guardar Fondo</button>
+                        <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para Agregar/Editar Asset -->
+        <div id="assetModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeAssetModal">&times;</span>
+                <h2 id="assetModalTitle">Agregar Nuevo Asset</h2>
+                <form id="assetForm">
+                    <div class="form-group">
+                        <label for="assetTitle">Título del Asset:</label>
+                        <input type="text" id="assetTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetDescription">Descripción:</label>
+                        <textarea id="assetDescription" rows="3" placeholder="Descripción del asset (opcional)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetCurrentValue">Valor Actual:</label>
+                        <input type="number" id="assetCurrentValue" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetInvested">Valor Invertido:</label>
+                        <input type="number" id="assetInvested" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetMissingInvestment">Valor Faltante de Inversión:</label>
+                        <input type="number" id="assetMissingInvestment" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetSaleValue">Valor de Venta (Goal):</label>
+                        <input type="number" id="assetSaleValue" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetColor">Color:</label>
+                        <input type="color" id="assetColor" value="#e67e22">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Guardar Asset</button>
+                        <button type="button" class="btn-secondary" id="cancelAssetBtn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para Gestionar Versiones -->
+        <div id="versionsModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeVersionsModal">&times;</span>
+                <h2>Gestionar Versiones</h2>
+                <div id="versionsList" class="versions-list">
+                    <!-- Las versiones se mostrarán aquí -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Configurar Línea de Tiempo -->
+        <div id="timelineModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeTimelineModal">&times;</span>
+                <h2>⏱️ Configurar Línea de Tiempo</h2>
+                <form id="timelineForm">
+                    <div class="form-group">
+                        <label for="startDate">Fecha de Inicio:</label>
+                        <input type="date" id="startDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="analysisDate">Fecha de Análisis (para visualizar):</label>
+                        <input type="date" id="analysisDate" required>
+                        <small style="color: #6c757d; display: block; margin-top: 5px;">Esta es la fecha que se mostrará como referencia en la línea de tiempo</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h3>Fases del Plan</h3>
+                        <div id="phasesList"></div>
+                        <button type="button" id="addPhaseBtn" class="btn-add-phase">+ Agregar Fase</button>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Guardar Configuración</button>
+                        <button type="button" class="btn-secondary" id="cancelTimelineBtn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contenedor de Tanques -->
+        <div class="tanks-container" id="tanksContainer">
+            <!-- Los tanques se generarán dinámicamente aquí -->
+        </div>
+
+        <!-- Contenedor de Assets -->
+        <div class="assets-section">
+            <h2>🏛️ Assets</h2>
+            <div class="assets-container" id="assetsContainer">
+                <p class="empty-state" style="text-align: center; color: #6c757d; padding: 40px;">No hay assets agregados</p>
+            </div>
+        </div>
+
+        <!-- Línea de Tiempo -->
+        <div class="timeline-section">
+            <h2>📊 Línea de Tiempo</h2>
+            <div id="timelineContainer" class="timeline-container">
+                <p class="timeline-placeholder">Haz clic en 📅 para configurar la línea de tiempo</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
